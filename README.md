@@ -1,5 +1,3 @@
-I'll create a comprehensive README file for your AQI Monitor web application with the hidden sidebar functionality and dynamic features:
-
 # AQI Monitor - Advanced Air Quality Index Web Application
 
 A modern, responsive web application for monitoring Air Quality Index (AQI) with real-time data visualization, encrypted logging, dynamic recommendations, and smart data persistence.
