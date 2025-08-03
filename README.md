@@ -45,13 +45,13 @@ A modern, responsive web application for monitoring Air Quality Index (AQI) with
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/OMNIPOTENTHAVOC/aqi-monitor.git
-   cd aqi-monitor
+   git clone https://github.com/OMNIPOTENTHAVOC/aqi.git
+   cd aqi
    ```
 
 2. **Project Structure**
    ```
-   aqi-monitor/
+   aqi/
    ├── index.html          # Main HTML file with all pages
    ├── style.css           # Complete stylesheet with responsive design
    ├── script.js           # JavaScript with sidebar, navigation, and data persistence
