@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQI Monitor</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Mobile Menu Button (Always visible) -->
+    <button class="mobile-menu-btn" id="mobile-menu-btn">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar Navigation (Hidden by default) -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        <div class="sidebar-content">
+            <div class="logo-section">
+                <div class="logo-container">
+                    <i class="fas fa-lungs logo-icon"></i>
+                    <span class="logo-text">AQI Monitor</span>
+                </div>
+                <button class="close-btn" id="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="#" class="nav-item active" data-page="home">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#" class="nav-item" data-page="logs">
+                    <i class="fas fa-list-alt"></i>
+                    <span>Logs</span>
+                </a>
+                <a href="#" class="nav-item" data-page="about">
+                    <i class="fas fa-info-circle"></i>
+                    <span>About</span>
+                </a>
+            </div>
+            
+            <!-- Theme Toggle in Sidebar -->
+            <div class="sidebar-theme-toggle">
+                <div class="theme-toggle">
+                    <input type="checkbox" id="theme-switch">
+                    <label for="theme-switch">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                    </label>
+                </div>
+                <span class="theme-label">Dark Mode</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <div class="page active" id="home-page">
+            <header class="page-header">
+                <h1>Air Quality Monitor</h1>
+                <p class="page-subtitle">Real-time air quality monitoring with encrypted logging</p>
+            </header>
+
+            <!-- Current AQI Card with Circular Display -->
+            <div class="card main-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-thermometer-half"></i> Current Air Quality</h2>
+                    <button class="refresh-btn" onclick="refreshAqi()">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+                <div class="aqi-content">
+                    <!-- Circular AQI Display -->
+                    <div class="aqi-display">
+                        <div class="aqi-circle">
+                            <svg class="circle-progress" width="200" height="200">
+                                <circle cx="100" cy="100" r="90" stroke="#e2e8f0" stroke-width="8" fill="none"/>
+                                <circle id="progress-circle" cx="100" cy="100" r="90" stroke="#3b82f6" stroke-width="8" 
+                                        fill="none" stroke-linecap="round" stroke-dasharray="565.48" stroke-dashoffset="565.48"/>
+                            </svg>
+                            <div class="aqi-value">
+                                <span id="aqi-value" class="number">Loading...</span>
+                                <span class="unit">AQI</span>
+                                <p id="aqi-status" class="status">--</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Bar Graph -->
+                        <div class="aqi-bar-graph">
+                            <h3>AQI Distribution</h3>
+                            <div class="bar-container">
+                                <div class="bar good">
+                                    <div class="bar-fill" data-target="0"></div>
+                                    <span class="bar-label">Good</span>
+                                    <span class="bar-range">0-50</span>
+                                </div>
+                                <div class="bar moderate">
+                                    <div class="bar-fill" data-target="0"></div>
+                                    <span class="bar-label">Moderate</span>
+                                    <span class="bar-range">51-100</span>
+                                </div>
+                                <div class="bar unhealthy-sensitive">
+                                    <div class="bar-fill" data-target="0"></div>
+                                    <span class="bar-label">Unhealthy (S)</span>
+                                    <span class="bar-range">101-150</span>
+                                </div>
+                                <div class="bar unhealthy">
+                                    <div class="bar-fill" data-target="0"></div>
+                                    <span class="bar-label">Unhealthy</span>
+                                    <span class="bar-range">151-200</span>
+                                </div>
+                                <div class="bar very-unhealthy">
+                                    <div class="bar-fill" data-target="0"></div>
+                                    <span class="bar-label">Very Bad</span>
+                                    <span class="bar-range">201-300</span>
+                                </div>
+                                <div class="bar hazardous">
+                                    <div class="bar-fill" data-target="0"></div>
+                                    <span class="bar-label">Hazardous</span>
+                                    <span class="bar-range">301+</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AQI Scale -->
+                    <div class="aqi-scale">
+                        <h3>Air Quality Scale</h3>
+                        <div class="scale-items">
+                            <div class="scale-item good">
+                                <span class="dot"></span>
+                                <span class="label">Good (0-50)</span>
+                            </div>
+                            <div class="scale-item moderate">
+                                <span class="dot"></span>
+                                <span class="label">Moderate (51-100)</span>
+                            </div>
+                            <div class="scale-item unhealthy-sensitive">
+                                <span class="dot"></span>
+                                <span class="label">Unhealthy for Sensitive (101-150)</span>
+                            </div>
+                            <div class="scale-item unhealthy">
+                                <span class="dot"></span>
+                                <span class="label">Unhealthy (151-200)</span>
+                            </div>
+                            <div class="scale-item very-unhealthy">
+                                <span class="dot"></span>
+                                <span class="label">Very Unhealthy (201-300)</span>
+                            </div>
+                            <div class="scale-item hazardous">
+                                <span class="dot"></span>
+                                <span class="label">Hazardous (301+)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Air Quality Improvement Section (Dynamic based on AQI) -->
+            <div class="card improvement-card" id="improvement-section" style="display: none;">
+                <div class="card-header">
+                    <h2><i class="fas fa-leaf"></i> <span id="improvement-title">Improve Air Quality</span></h2>
+                    <div class="improvement-badge" id="improvement-badge">Tips & Actions</div>
+                </div>
+                <div class="card-content" id="improvement-content">
+                    <!-- Content will be dynamically generated based on AQI -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Logs Page -->
+        <div class="page" id="logs-page">
+            <header class="page-header">
+                <h1>Encrypted Log Viewer</h1>
+                <p class="page-subtitle">Access historical AQI data with secure encryption</p>
+            </header>
+
+            <!-- Encrypted Log Viewer Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-lock"></i> Encrypted Log Viewer</h2>
+                    <div class="security-badge">AES-256</div>
+                </div>
+                <div class="card-content">
+                    <div class="input-description">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Enter the decryption password to view historical AQI data logs</p>
+                    </div>
+                    <div class="input-group">
+                        <div class="input-field">
+                            <i class="fas fa-key"></i>
+                            <input type="password" id="password" placeholder="Enter decryption password">
+                        </div>
+                        <button id="view-logs-btn" class="btn-primary">
+                            <i class="fas fa-unlock-alt"></i>
+                            Decrypt & View Logs
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Decrypted Logs Card -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-file-alt"></i> Decrypted Logs</h3>
+                </div>
+                <div class="card-content">
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <div class="terminal-buttons">
+                                <span class="btn red"></span>
+                                <span class="btn yellow"></span>
+                                <span class="btn green"></span>
+                            </div>
+                            <span class="terminal-title">Terminal</span>
+                        </div>
+                        <textarea id="log-output" rows="20" readonly placeholder="Logs will appear here after successful decryption..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div class="page" id="about-page">
+            <header class="page-header">
+                <h1>About AQI Monitor</h1>
+                <p class="page-subtitle">Learn more about air quality monitoring and this application</p>
+            </header>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2><i class="fas fa-info-circle"></i> About This Application</h2>
+                </div>
+                <div class="card-content">
+                    <div class="about-content">
+                        <div class="about-section">
+                            <h3>What is AQI?</h3>
+                            <p>The Air Quality Index (AQI) is a standardized system used to communicate air pollution levels to the public. It provides a simple, color-coded way to understand air quality and its potential health impacts.</p>
+                        </div>
+                        
+                        <div class="about-section">
+                            <h3>How It Works</h3>
+                            <p>Our application monitors real-time air quality data and provides:</p>
+                            <ul>
+                                <li>Current AQI readings with visual indicators</li>
+                                <li>Historical data logging with encryption</li>
+                                <li>Personalized recommendations based on air quality</li>
+                                <li>Interactive charts and visualizations</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="about-section">
+                            <h3>Security & Privacy</h3>
+                            <p>We take data security seriously. All historical logs are encrypted using AES-256 encryption, ensuring your monitoring data remains private and secure.</p>
+                        </div>
+                        
+                        <div class="about-section">
+                            <h3>Technology Stack</h3>
+                            <div class="tech-stack">
+                                <span class="tech-item">HTML5</span>
+                                <span class="tech-item">CSS3</span>
+                                <span class="tech-item">JavaScript</span>
+                                <span class="tech-item">SVG Graphics</span>
+                                <span class="tech-item">AES Encryption</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright Footer -->
+        <footer class="copyright-footer">
+            <div class="footer-content">
+                <p>&copy; 2025 AQI Monitor. All rights reserved.</p>
+                <p>Made by Siddhansh Srivastava for cleaner air and better health</p>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://bitwiseshiftleft.github.io/sjcl/sjcl.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
