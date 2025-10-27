@@ -225,11 +225,7 @@ The application stores:
 - **Color Contrast**: WCAG 2.1 AA compliant
 - **Focus Management**: Proper focus handling in sidebar
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Stanford Javascript Crypto Library** - For AES encryption functionality
 - **Font Awesome** - For comprehensive icon library
